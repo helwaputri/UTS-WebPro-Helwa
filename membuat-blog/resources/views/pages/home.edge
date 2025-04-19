@@ -1,0 +1,47 @@
+@layout.app({ title: 'Kedai Woku_suka.suka 🍜' })
+  <div class="max-w-2xl mx-auto px-6 py-10 bg-red-50 rounded-3xl shadow-lg">
+
+    {{-- Judul Halaman --}}
+    <h1 class="text-4xl font-extrabold text-red-800 mb-8 text-center drop-shadow-lg">🍚 Kedai Woku_suka.suka 🍜</h1>
+
+    {{-- Flash Message --}}
+    @flashMessage('notification')
+      <div class="mt-4 bg-yellow-100 border border-yellow-300 text-sm text-yellow-800 rounded-xl p-4 shadow-sm" role="alert">
+        🎉 {{ $message.message }}
+      </div>
+    @end
+
+    {{-- Form Post --}}
+    <form class="space-y-5" action="/posts" method="post">
+      {{ csrfField() }}
+
+      <div>
+        <textarea
+          class="py-4 px-5 block w-full border border-red-200 rounded-2xl text-sm focus:border-red-400 focus:ring-red-300 bg-white placeholder-red-400 disabled:opacity-50 disabled:pointer-events-none"
+          name="content"
+          required
+          rows="5"
+          placeholder="🍜 Ceritakan pengalaman makananmu hari ini..."></textarea>
+
+        @inputError('content')
+          <p class="text-xs text-red-600 mt-2">😿 {{ $messages }}</p>
+        @end
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          class="py-3 px-7 inline-flex items-center gap-x-2 text-sm font-bold rounded-full bg-gradient-to-r from-red-400 to-red-500 text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-300 transition">
+          ✏ Kirim Cerita Makanan
+        </button>
+      </div>
+    </form>
+
+    {{-- Daftar Post --}}
+    <div class="mt-12 space-y-6">
+      @each(post in posts)
+        @include('pages/partials/post')
+      @end
+    </div>
+
+  </div>
+@end
